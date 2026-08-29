@@ -9,6 +9,10 @@
 #        New repository variable, named DEPLOY_URL, e.g.
 #        https://linkedin-profile-api-xxxx.onrender.com
 #
+# Note: on a PRIVATE repo this burns the 2,000 free Actions minutes/month in
+# about a week, because GitHub bills a minimum of one minute per run. It is
+# effectively free once the repo is public. Keep it disabled until then.
+#
 # Turn this off once the service no longer needs to stay warm: Actions tab ->
 # Keep service awake -> "..." -> Disable workflow. Leaving it running keeps a
 # LinkedIn session alive indefinitely and burns Render's free instance hours.
