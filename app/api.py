@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 
@@ -91,6 +92,26 @@ async def health() -> dict:
         "sources": [s.name for s in fetcher.sources],
         "auth_enforced": bool(settings.api_key_set),
         "cache": cache.stats(),
+        # Names and sizes only - never values. Present so a misconfigured
+        # deployment can be diagnosed without shell access to the container.
+        "env": _env_report(),
+    }
+
+
+def _env_report() -> dict:
+    """Which configuration variables the process can actually see."""
+    watched = (
+        "LINKEDIN_COOKIE", "LINKEDIN_LI_AT", "LINKEDIN_JSESSIONID",
+        "API_KEYS", "DEMO_MODE", "ENABLE_PUBLIC_FALLBACK", "PORT",
+    )
+    seen = {name: len(os.environ[name]) for name in watched if name in os.environ}
+    return {
+        "set": seen,
+        # Anything LinkedIn-ish the platform has, to catch a misspelled name.
+        "other_linkedin_vars": sorted(
+            k for k in os.environ
+            if "LINKEDIN" in k.upper() and k not in watched
+        ),
     }
 
 
