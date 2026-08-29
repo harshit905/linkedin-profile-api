@@ -8,6 +8,10 @@ services:
     runtime: docker
     dockerfilePath: ./Dockerfile
     plan: free
+    # Closest Render region to India. The session cookie is created on an
+    # Indian IP, and a session that suddenly makes requests from the US is a
+    # louder signal to LinkedIn than the datacentre IP alone.
+    region: singapore
     healthCheckPath: /health
     envVars:
       # The whole browser Cookie header. See the README.
