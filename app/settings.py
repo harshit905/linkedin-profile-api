@@ -139,6 +139,28 @@ class Settings(BaseSettings):
     def has_session(self) -> bool:
         return "li_at" in self.cookies
 
+    @property
+    def config_warnings(self) -> list[str]:
+        """Misconfigurations that would otherwise fail silently.
+
+        Pasting only the `li_at` token into LINKEDIN_COOKIE is an easy mistake
+        and looks identical to "no session configured", so name it explicitly.
+        """
+        warnings: list[str] = []
+        raw = self.linkedin_cookie.strip()
+        if raw and not self.cookies:
+            warnings.append(
+                "LINKEDIN_COOKIE is set but no cookies could be parsed from it. "
+                "It must be the whole Cookie header - 'li_at=...; JSESSIONID=...' "
+                "- not just the li_at value on its own."
+            )
+        elif raw and "li_at" not in self.cookies:
+            warnings.append(
+                "LINKEDIN_COOKIE parsed, but contains no li_at cookie, which is "
+                "the session token."
+            )
+        return warnings
+
 
 @lru_cache
 def get_settings() -> Settings:

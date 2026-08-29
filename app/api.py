@@ -95,6 +95,7 @@ async def health() -> dict:
         # Names and sizes only - never values. Present so a misconfigured
         # deployment can be diagnosed without shell access to the container.
         "env": _env_report(),
+        "warnings": settings.config_warnings,
     }
 
 
