@@ -1,0 +1,161 @@
+{
+  "profile": {
+    "firstName": "Ada",
+    "lastName": "Lovelace",
+    "headline": "Mathematician | Writing the first algorithm",
+    "summary": "  Interested in analytical engines and their general-purpose potential.  ",
+    "locationName": "London",
+    "geoCountryName": "United Kingdom",
+    "industryName": "Computer Software",
+    "publicIdentifier": "adalovelace",
+    "student": false,
+    "miniProfile": {
+      "picture": {
+        "com.linkedin.common.VectorImage": {
+          "rootUrl": "https://media.licdn.com/dms/image/C4E03/",
+          "artifacts": [
+            {
+              "width": 400,
+              "height": 400,
+              "fileIdentifyingUrlPathSegment": "400_400/0/photo.jpg"
+            },
+            {
+              "width": 100,
+              "height": 100,
+              "fileIdentifyingUrlPathSegment": "100_100/0/photo.jpg"
+            }
+          ]
+        }
+      },
+      "backgroundImage": {
+        "com.linkedin.common.VectorImage": {
+          "rootUrl": "https://media.licdn.com/dms/image/C4E16/",
+          "artifacts": [
+            {
+              "width": 1400,
+              "height": 350,
+              "fileIdentifyingUrlPathSegment": "1400_350/0/cover.jpg"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "positionView": {
+    "elements": [
+      {
+        "title": "Analyst",
+        "companyName": "Analytical Engine Project",
+        "locationName": "London, England",
+        "description": "Wrote the first published algorithm intended for a machine.",
+        "timePeriod": {
+          "startDate": { "month": 6, "year": 1842 }
+        },
+        "company": {
+          "miniCompany": {
+            "name": "Analytical Engine Project",
+            "universalName": "analytical-engine",
+            "logo": {
+              "com.linkedin.common.VectorImage": {
+                "rootUrl": "https://media.licdn.com/dms/image/C4D00/",
+                "artifacts": [
+                  {
+                    "width": 200,
+                    "height": 200,
+                    "fileIdentifyingUrlPathSegment": "200_200/0/logo.png"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Translator",
+        "companyName": "Independent",
+        "timePeriod": {
+          "startDate": { "month": 1, "year": 1840 },
+          "endDate": { "month": 12, "year": 1841 }
+        }
+      }
+    ]
+  },
+  "educationView": {
+    "elements": [
+      {
+        "schoolName": "University of London",
+        "degreeName": "Private tuition",
+        "fieldOfStudy": "Mathematics",
+        "grade": "First",
+        "activities": "Correspondence with Charles Babbage",
+        "timePeriod": {
+          "startDate": { "year": 1833 },
+          "endDate": { "year": 1836 }
+        },
+        "school": {
+          "schoolName": "University of London",
+          "entityUrn": "urn:li:fs_miniSchool:12345"
+        }
+      }
+    ]
+  },
+  "skillView": {
+    "elements": [{ "name": "Mathematics" }]
+  },
+  "certificationView": {
+    "elements": [
+      {
+        "name": "Certificate of Analytical Engines",
+        "authority": "Royal Society",
+        "licenseNumber": "RS-1843",
+        "url": "https://example.org/cert",
+        "timePeriod": { "startDate": { "month": 3, "year": 1843 } }
+      }
+    ]
+  },
+  "languageView": {
+    "elements": [
+      { "name": "English", "proficiency": "NATIVE_OR_BILINGUAL" },
+      { "name": "French", "proficiency": "PROFESSIONAL_WORKING" }
+    ]
+  },
+  "projectView": {
+    "elements": [
+      {
+        "title": "Note G",
+        "description": "An algorithm to compute Bernoulli numbers.",
+        "url": "https://example.org/note-g",
+        "timePeriod": { "startDate": { "year": 1843 } }
+      }
+    ]
+  },
+  "publicationView": {
+    "elements": [
+      {
+        "name": "Sketch of the Analytical Engine",
+        "publisher": "Taylor's Scientific Memoirs",
+        "url": "https://example.org/sketch",
+        "date": { "month": 10, "year": 1843 }
+      }
+    ]
+  },
+  "honorView": {
+    "elements": [
+      {
+        "title": "First Programmer",
+        "issuer": "History",
+        "issueDate": { "year": 1843 }
+      }
+    ]
+  },
+  "volunteerExperienceView": {
+    "elements": [
+      {
+        "role": "Correspondent",
+        "companyName": "Royal Society",
+        "cause": "SCIENCE_AND_TECHNOLOGY",
+        "timePeriod": { "startDate": { "year": 1841 } }
+      }
+    ]
+  }
+}

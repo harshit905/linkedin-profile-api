@@ -1,0 +1,29 @@
+# One-click deploy to Render (free tier gives you HTTPS on *.onrender.com).
+#   render.com -> New -> Blueprint -> point at this repo.
+# Secrets are marked sync:false so Render prompts for them in the dashboard
+# instead of reading them from the repository.
+services:
+  - type: web
+    name: linkedin-profile-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      # The whole browser Cookie header. See the README.
+      - key: LINKEDIN_COOKIE
+        sync: false
+      # Comma-separated API keys. Leave blank to keep the endpoint open.
+      - key: API_KEYS
+        sync: false
+      # Set true to serve the sample profile without calling LinkedIn at all.
+      - key: DEMO_MODE
+        value: "false"
+      - key: ENABLE_PUBLIC_FALLBACK
+        value: "true"
+      - key: CACHE_TTL_SECONDS
+        value: "3600"
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "20"
+      - key: MAX_UPSTREAM_CONCURRENCY
+        value: "1"

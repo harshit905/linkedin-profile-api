@@ -1,0 +1,60 @@
+# Keeps the Render free instance from sleeping.
+#
+# Render's free tier spins a service down after ~15 minutes of inactivity, and
+# the next request then waits ~50 seconds for a cold start - long enough that a
+# visitor assumes the service is broken. Hitting /health on a schedule keeps it
+# warm.
+#
+# Setup: Settings -> Secrets and variables -> Actions -> Variables tab ->
+#        New repository variable, named DEPLOY_URL, e.g.
+#        https://linkedin-profile-api-xxxx.onrender.com
+#
+# Turn this off once the service no longer needs to stay warm: Actions tab ->
+# Keep service awake -> "..." -> Disable workflow. Leaving it running keeps a
+# LinkedIn session alive indefinitely and burns Render's free instance hours.
+name: Keep service awake
+
+on:
+  schedule:
+    # Every 5 minutes. GitHub delays scheduled runs under load, sometimes by
+    # 10+ minutes, so 5 leaves headroom against Render's 15-minute idle timeout.
+    - cron: "*/5 * * * *"
+  workflow_dispatch: # lets you trigger a check by hand from the Actions tab
+
+# Never let two pings overlap if one run is slow.
+concurrency:
+  group: keep-awake
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping /health
+        env:
+          DEPLOY_URL: ${{ vars.DEPLOY_URL }}
+        run: |
+          if [ -z "$DEPLOY_URL" ]; then
+            echo "::warning::DEPLOY_URL variable is not set - skipping."
+            echo "Set it under Settings -> Secrets and variables -> Actions -> Variables."
+            exit 0
+          fi
+
+          url="${DEPLOY_URL%/}/health"
+          echo "Pinging $url"
+
+          # --max-time 90 rather than the default: if the instance *has* gone
+          # to sleep, this request is the one paying the cold-start cost.
+          code=$(curl -sS -o /tmp/body.json -w '%{http_code}' \
+                   --retry 3 --retry-delay 20 --retry-all-errors \
+                   --max-time 90 "$url" || echo "000")
+
+          echo "HTTP $code"
+          [ -s /tmp/body.json ] && cat /tmp/body.json
+
+          if [ "$code" != "200" ]; then
+            echo "::error::Health check failed with HTTP $code"
+            exit 1
+          fi
+          echo "Service is awake."
